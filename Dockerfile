@@ -1,0 +1,14 @@
+FROM golang:1.5.1
+
+ENV SERVICE_NAME datahub-api-gateway
+ENV SRC_DIR /go/src/github.com/asiainfoLDP/$SERVICE_NAME
+COPY . $SRC_DIR
+
+WORKDIR $SRC_DIR
+ENV START_SCRIPT start.sh
+RUN chmod +x $START_SCRIPT
+go build
+
+ENV SERVICE_PORT 7777
+CMD ["./$START_SCRIPT", "$SERVICE_NAME", "$SERVICE_PORT"]
+EXPOSE $SERVICE_PORT
